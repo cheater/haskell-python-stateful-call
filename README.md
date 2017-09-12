@@ -1,4 +1,4 @@
-Installation:
+# Installation:
 
 Before installing, please start a new `cabal sandbox` for this package and
 install `c2hs` in the sandbox. You will also need the python 3.x headers for
@@ -9,7 +9,7 @@ python code (in the file `pymain.py`) is located, and the Haskell code will
 look for it in the current working directory.
 
 
-About CPython:
+# About CPython:
 
 I have decided to use the [CPython
 package](https://hackage.haskell.org/package/cpython). While verbose, it is
@@ -34,7 +34,9 @@ Haskell](https://john-millikin.com/articles/ride-the-snake/). I suggest reading
 that after this README and before reading the code. It's a quick read.
 
 
-Code description:
+# Code description:
+
+## Unusual coding conventions
 
 In order to help understanding it, I've done a few things in this piece of code
 I would have otherwise done differently:
@@ -46,6 +48,8 @@ so that it's easier to figure out where things came from.
   code.
 - There is a lot of debugging output in order to illustrate what's happening on
   the interface of Haskell and Python.
+
+## Code execution: environment setup
 
 The code starts by setting up the Python environment and adding the current
 working directory to Python import path. Next up, it imports the Python module
@@ -62,12 +66,16 @@ In addition to this, both the function `stateful` in Python, as well as the
 Haskell code calling it, contain print statements that show what values the
 function is returning.
 
+## Calling the Python function from Haskell
+
 The process of calling the function is a little involved. The function must be
 selected as an attribute of the module that was imported. To make this less
 verbose, I created an infix operator called `-->` that can select attributes.
 The function is called with the arguments in a list, each of which must be
 wrapped in the right Python type, and then in CPython's `Object` type which
 essentially means the marshalling.
+
+## Parsing and using the Python function's return value in Haskell
 
 After the function returns, it gives us a value of type `SomeObject` which
 illustrates the ambiguity of Python's typing: only once the value is used
@@ -78,7 +86,13 @@ selecting the concrete type that will fit in the place where we are using the
 value. Finally, once `SomeObject` has been cast to CPython's `Integer`, we
 again convert it to a Haskell `Integer`. This value gets printed out.
 
+## Utility functions
+
 The code also contains a small exception handler which will print the message
 of the exception. To try it out, you can change the string `"pymain"` in the
 function `statefulDemo` to something else, so that Python tries to import a
 module which does not exist.
+
+I've introduced a function called `getAttr` with a related infix operator
+called `-->` in order to make refering to Python attributes easier to
+understand.
