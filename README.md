@@ -11,9 +11,8 @@ look for it in the current working directory.
 
 # About CPython:
 
-I have decided to use the [CPython
-package](https://hackage.haskell.org/package/cpython). While verbose, it is
-uniquely suited to creating a clean, high level abstraction over Python
+I have decided to use the [CPython package][haddock-cpython]. While verbose, it
+is uniquely suited to creating a clean, high level abstraction over Python
 libraries, because it has a very good grip on the semantics of Python and
 allows manipulating Python values as first class values in Haskell. This means
 that it can convey the semantics of the Python library better than
@@ -21,7 +20,7 @@ quasiquoters, which end up treating all Python related code as text.
 
 CPython documentation isn't verbose enough. However, once you get the hang of
 its classes, you can make fast progress. One thing to bear in mind that in a
-type declaration such as this:
+[type declaration such as this][haddock-sneaky-type-decl]:
     toInteger :: Integer -> IO Integer
 the left `Integer` might be the usual Haskell `Integer` from the `Prelude`,
 whereas the one on the right is a completely different `Integer` provided by
@@ -29,9 +28,9 @@ whereas the one on the right is a completely different `Integer` provided by
 to hover the link to find out where the type comes from.
 
 There is a fairly good tutorial, which can help understanding CPython when the
-haddocks don't explain things too well: [Calling Python libraries from
-Haskell](https://john-millikin.com/articles/ride-the-snake/). I suggest reading
-that after this README and before reading the code. It's a quick read.
+haddocks don't explain things well enough: [Calling Python libraries from
+Haskell][tutorial]. I suggest reading that tutorial after this README and
+before reading the code - it's a fairly quick read.
 
 
 # Code description:
@@ -71,21 +70,22 @@ function is returning.
 The process of calling the function is a little involved. The function must be
 selected as an attribute of the module that was imported. To make this less
 verbose, I created an infix operator called `-->` that can select attributes.
-The function is called with the arguments in a list, each of which must be
-wrapped in the right Python type, and then in CPython's `Object` type which
-essentially means the marshalling.
+The function is called with the arguments in a list. Each argument must be
+wrapped in the right Python type, and then in CPython's
+[`Object`][haddock-Object] type which essentially means the marshalling.
 
 ## Parsing and using the Python function's return value in Haskell
 
 After the function returns, it gives us a value of type
-[`SomeObject`](https://hackage.haskell.org/package/cpython-3.4.0/docs/CPython-Protocols-Object.html#t:SomeObject)
-which illustrates the ambiguity of Python's typing: only once the value is used
-somewhere, Python might cast it to a type that fits in the expression being
-used. We have to do it "by hand" by calling `cast`, although in reality
+[`SomeObject`][haddock-SomeObject], which exists to explicitly illustrate the
+ambiguity of Python's typing: only once the value is used somewhere, Python
+might cast it to a type that fits in the expression being used. We have to do
+it "by hand" by calling [`cast`][haddock-cast], although in reality
 Hindley-Milner type inference does all the work for us by, similarly to Python,
 selecting the concrete type that will fit in the place where we are using the
-value. Finally, once `SomeObject` has been cast to CPython's `Integer`, we
-again convert it to a Haskell `Integer`. This value gets printed out.
+value. Finally, once `SomeObject` has been cast to CPython's
+[`Integer`][haddock-cpython-integer], we again convert it to a Haskell
+`Integer`. This value gets printed out.
 
 ## Utility functions
 
@@ -97,3 +97,11 @@ module which does not exist.
 I've introduced a function called `getAttr` with a related infix operator
 called `-->` in order to make refering to Python attributes easier to
 understand.
+
+[tutorial]: https://john-millikin.com/articles/ride-the-snake/
+[haddock-cpython]: https://hackage.haskell.org/package/cpython
+[haddock-sneaky-type-decl]: https://hackage.haskell.org/package/cpython-3.4.0/docs/CPython-Types.html#v:toInteger
+[haddock-Object]: https://hackage.haskell.org/package/cpython-3.4.0/docs/CPython-Protocols-Object.html#t:Object
+[haddock-SomeObject]: https://hackage.haskell.org/package/cpython-3.4.0/docs/CPython-Protocols-Object.html#t:SomeObject
+[haddock-cast]: https://hackage.haskell.org/package/cpython-3.4.0/docs/CPython-Protocols-Object.html#v:cast
+[haddock-cpython-integer]: https://hackage.haskell.org/package/cpython-3.4.0/docs/CPython-Types.html#t:Integer
