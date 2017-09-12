@@ -77,8 +77,9 @@ essentially means the marshalling.
 
 ## Parsing and using the Python function's return value in Haskell
 
-After the function returns, it gives us a value of type `SomeObject` which
-illustrates the ambiguity of Python's typing: only once the value is used
+After the function returns, it gives us a value of type
+[`SomeObject`](https://hackage.haskell.org/package/cpython-3.4.0/docs/CPython-Protocols-Object.html#t:SomeObject)
+which illustrates the ambiguity of Python's typing: only once the value is used
 somewhere, Python might cast it to a type that fits in the expression being
 used. We have to do it "by hand" by calling `cast`, although in reality
 Hindley-Milner type inference does all the work for us by, similarly to Python,
