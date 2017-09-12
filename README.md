@@ -25,9 +25,10 @@ its classes, you can make fast progress. One thing to bear in mind that in a
     toInteger :: Integer -> IO Integer
 ```
 the left `Integer` might be the usual Haskell `Integer` from the `Prelude`,
-whereas the one on the right is a completely different `Integer` provided by
-`CPython.Types`. This can be confusing and when viewing the haddocks you have
-to hover the link to find out where the type comes from.
+whereas the one on the right is a [completely different `Integer` provided by
+`CPython.Types`][haddocks-cpython-integer]. This can be confusing and when
+viewing the haddocks you have to hover the link to find out where the type
+comes from.
 
 There is a fairly good tutorial, which can help understanding CPython when the
 haddocks don't explain things well enough: [Calling Python libraries from
