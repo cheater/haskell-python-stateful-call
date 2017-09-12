@@ -37,10 +37,10 @@ before reading the code - it's a fairly quick read.
 
 # Code description:
 
-## Unusual coding conventions
+## Coding conventions
 
-In order to help understanding it, I've done a few things in this piece of code
-I would have otherwise done differently:
+In order to help understanding the code, I've done a few things in it I would
+have otherwise done differently:
 
 - The way to use the CPython library is to import all modules to a single
   namespace called `Py`. Here, each module is imported under a different name,
