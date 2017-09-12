@@ -21,7 +21,9 @@ quasiquoters, which end up treating all Python related code as text.
 CPython documentation isn't verbose enough. However, once you get the hang of
 its classes, you can make fast progress. One thing to bear in mind that in a
 [type declaration such as this][haddock-sneaky-type-decl]:
+```Haskell
     toInteger :: Integer -> IO Integer
+```
 the left `Integer` might be the usual Haskell `Integer` from the `Prelude`,
 whereas the one on the right is a completely different `Integer` provided by
 `CPython.Types`. This can be confusing and when viewing the haddocks you have
