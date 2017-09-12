@@ -50,7 +50,7 @@ so that it's easier to figure out where things came from.
 - There is a lot of debugging output in order to illustrate what's happening on
   the interface of Haskell and Python.
 
-## Code execution: environment setup
+## Python execution environment setup
 
 The code starts by setting up the Python environment and adding the current
 working directory to Python import path. Next up, it imports the Python module
