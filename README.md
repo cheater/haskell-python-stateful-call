@@ -26,7 +26,7 @@ its classes, you can make fast progress. One thing to bear in mind that in a
 ```
 the left `Integer` might be the usual Haskell `Integer` from the `Prelude`,
 whereas the one on the right is a [completely different `Integer` provided by
-`CPython.Types`][haddocks-cpython-integer]. This can be confusing and when
+`CPython.Types`][haddock-cpython-integer]. This can be confusing and when
 viewing the haddocks you have to hover the link to find out where the type
 comes from.
 
